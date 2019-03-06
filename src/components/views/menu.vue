@@ -51,7 +51,7 @@
             <Icon type="md-cloud-download" />
             <span>文件下载</span>
           </MenuItem>
-          <MenuItem name="1-4" to="/apply">
+          <MenuItem name="1-4" to="/status">
             <Icon type="md-create" />
             <span>网上申报</span>
           </MenuItem>

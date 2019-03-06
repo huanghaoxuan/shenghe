@@ -6,7 +6,14 @@
             :model="formDate"
             :rules="ruleValidate"
             :label-width="80">
-
+        <FormItem label="工号："
+                  prop="gonghao">
+          <Input prefix="ios-contact"
+                 placeholder="请输入工号"
+                 style="width: 400px"
+                 clearable
+                 v-model="formDate.gonghao" />
+        </FormItem>
         <FormItem label="姓名："
                   prop="xingming">
           <Input prefix="ios-contact"
@@ -50,8 +57,9 @@ export default {
   data () {
     return {
       formDate: {
+        ID: this.$store.state.declareStatus.id,
         gonghao: this.$store.state.gonghao,
-        xingming: null,
+        xingming: this.$store.state.declareStatus.xingming,
         xueke: [],
         zhicheng: []
       },
@@ -3749,7 +3757,7 @@ export default {
         }
       ],
       ruleValidate: {
-
+        gonghao: [{ required: true, message: "请输入工号！", trigger: "blur" }],
         xingming: [
           {
             required: true,
@@ -3771,8 +3779,6 @@ export default {
           console.log(this.formDate);
           this.declareAjax(this.formDate);
           this.$Message.success("Success!");
-          this.$router.push("/status");
-          this.$router.go(0);
         } else {
           this.$Message.error("请选择申报学科与拟报职称");
         }
@@ -3784,8 +3790,9 @@ export default {
     declareAjax (data) {
       this.axios
         .post(
-          "/declare/save",
+          "/declare/update",
           this.qs.stringify({
+            ID: data.ID,
             gonghao: data.gonghao,
             xingming: data.xingming,
             xuekeID: data.xueke[data.xueke.length - 1].xuekeID,
@@ -3801,7 +3808,8 @@ export default {
         .then(
           function (res) {
             console.log(res.data);
-
+            this.$router.push("/status");
+            this.$router.go(0);
             //控制台打印请求成功时返回的数据
             //bind(this)可以不用
           }.bind(this)

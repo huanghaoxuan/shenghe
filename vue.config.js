@@ -9,16 +9,17 @@ module.exports = {
     https: false, // https:{type:Boolean}
     open: true, //配置自动启动浏览器
     //disableHostCheck: true,
-    proxy: null //'http://localhost:4000' // 配置跨域处理,只有一个代理
-    /*proxy: {
-            '/api': {
-                target: '<url>',
-                ws: true,
-                changeOrigin: true
-            },
-            '/foo': {
-                target: '<other_url>'
-            } 
-        }, */ // 配置多个代理
+    //proxy: null //'http://localhost:4000' // 配置跨域处理,只有一个代理
+    proxy: {
+      "/api": {
+        //使用"/api"来代替"http://f.apiplus.c"
+        target: "http://localhost:8282", //源地址
+        changeOrigin: true, //改变源
+        ws: true,
+        pathRewrite: {
+          "^/api": "" //路径重写
+        }
+      }
+    } // 配置多个代理
   }
 };
